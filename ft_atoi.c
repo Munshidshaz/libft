@@ -1,51 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmohamm2 <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/11 12:19:47 by mmohamm2          #+#    #+#             */
+/*   Updated: 2025/11/11 13:56:55 by mmohamm2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-size_t	skip_space(const char *arr)
+const char	*skip_space(const char *str)
 {
-	size_t	i;
-
-	i = 0;
-	while ((arr[i] >= 9 && arr[i] <= 13) || arr[i] == 32)
-	{
-		i++;
-	}
-	return (i);
-	
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	return (str);
 }
-int	ft_atoi (const char *nptr)
+
+int	num_generator(const char *str)
 {
+	long	nb;
 	size_t	i;
-	int	n;
-	long	buff;
 
 	i = 0;
-	n = 1;
-	i = skip_space(nptr);
-	if ( nptr[i] == '-' || nptr[i] == '+')
-	{	if (nptr[i] == '-')
-		{
-			n = -1;
-		}
-		i++;
-	}
-	buff = 0;
-	while ( nptr[i] >= '0' && nptr[i] <= '9')
+	nb = 0;
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		buff = (buff * 10) + (nptr[i] - '0');
-		
-		if ( buff > 2147483647L)
-		{
-			if (n == 1)
-			{
-				return (2147483647);
-			}
-			else if (n == -1)
-			{
-				return (-2147483648);
-			}
-		}
+		nb = (nb * 10) + (str[i] - '0');
+		if (nb > 2147483647L)
+			return (2147483647);
 		i++;
 	}
-	return ((int)buff * n);
+	return ((int) nb);
+}
 
+int	ft_atoi(const char *nptr)
+{
+	int	nb;
+	int	sign;
+
+	nb = 0;
+	sign = 1;
+	nptr = skip_space(nptr);
+	if (*nptr == '-' || *nptr == '+')
+	{
+		if (*nptr == '-')
+			sign = -1;
+		nptr++;
+	}
+	nb = num_generator(nptr);
+	nb *= sign;
+	return (nb);
 }

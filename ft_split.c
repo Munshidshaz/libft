@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmohamm2 <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/11 14:51:28 by mmohamm2          #+#    #+#             */
+/*   Updated: 2025/11/11 18:40:14 by mmohamm2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
-#include <stdlib.c>
+#include <stdlib.h>
 
 size_t	ft_tokens(char const *s, char c)
 {
@@ -83,10 +95,7 @@ char	**ft_sub_array_gen(char const *s, char c, char **array)
 char	**ft_split(char const *s, char c)
 {
 	char	**array;
-	char	*start;
-	size_t	index;	
 
-	index = 0;
 	if (s == NULL)
 	{
 		return (NULL);
