@@ -6,7 +6,7 @@
 #    By: mmohamm2 <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/11 16:44:26 by mmohamm2          #+#    #+#              #
-#    Updated: 2025/11/11 16:51:16 by mmohamm2         ###   ########.fr        #
+#    Updated: 2025/11/12 19:05:16 by mmohamm2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,9 @@ all: ${NAME}
 
 clean:
 	${RM} ${OBJS}
+fclean: ${clean}
+	${RM} ${NAME}
+
 re: fclean all
 
 .PHONY: all clean fclean re

@@ -6,51 +6,42 @@
 /*   By: mmohamm2 <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 12:19:47 by mmohamm2          #+#    #+#             */
-/*   Updated: 2025/11/11 13:56:55 by mmohamm2         ###   ########.fr       */
+/*   Updated: 2025/11/12 16:42:36 by mmohamm2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-const char	*skip_space(const char *str)
+int	ft_signcheck(const char *str, int i, int *is_neg)
 {
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		str++;
-	return (str);
-}
-
-int	num_generator(const char *str)
-{
-	long	nb;
-	size_t	i;
-
-	i = 0;
-	nb = 0;
-	while (str[i] >= '0' && str[i] <= '9')
+	if (str[i] == '-' || str[i] == '+')
 	{
-		nb = (nb * 10) + (str[i] - '0');
-		if (nb > 2147483647L)
-			return (2147483647);
+		if (str[i] == '-')
+			*is_neg = -1;
 		i++;
 	}
-	return ((int) nb);
+	return (i);
 }
 
-int	ft_atoi(const char *nptr)
+int	ft_atoi(const char *str)
 {
-	int	nb;
-	int	sign;
+	int			i;
+	int			is_neg;
+	long long	res;
 
-	nb = 0;
-	sign = 1;
-	nptr = skip_space(nptr);
-	if (*nptr == '-' || *nptr == '+')
+	i = 0;
+	is_neg = 1;
+	res = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	i = ft_signcheck(str, i, &is_neg);
+	while (str[i])
 	{
-		if (*nptr == '-')
-			sign = -1;
-		nptr++;
+		if (str[i] < 48 || str[i] > 57)
+			break ;
+		else
+			res = (res * 10) + str[i] - 48;
+		i++;
 	}
-	nb = num_generator(nptr);
-	nb *= sign;
-	return (nb);
+	return (res * is_neg);
 }

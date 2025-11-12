@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmohamm2 <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 14:57:33 by mmohamm2          #+#    #+#             */
-/*   Updated: 2025/11/11 19:27:54 by mmohamm2         ###   ########.fr       */
+/*   Created: 2025/11/12 13:35:27 by mmohamm2          #+#    #+#             */
+/*   Updated: 2025/11/12 19:28:25 by mmohamm2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	str_len(const char *str)
+size_t	f_strlen(const char *str)
 {
 	size_t	i;
 
@@ -30,22 +30,18 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dsize)
 	size_t	src_len;
 	size_t	i;
 
-	src_len = str_len(src);
-	dst_len = str_len(dst);
+	src_len = ft_strlen(src);
 	i = 0;
+	if (dsize == 0)
+		return (src_len);
+	dst_len = ft_strlen(dst);
 	if (dsize <= dst_len)
-	{
-		dst[dsize] = '\0';
-		return (dst_len + src_len);
-	}
+		return (dsize + src_len);
 	while (src[i] && (dst_len + i) < (dsize - 1))
 	{
 		dst[dst_len + i] = src[i];
 		i++;
 	}
-	if ((dst_len + i) < (dsize - 1))
-		dst[dst_len + i + 1] = '\0';
-	else
-		dst[dsize] = '\0';
+	dst[dst_len + i] = '\0';
 	return (dst_len + src_len);
 }

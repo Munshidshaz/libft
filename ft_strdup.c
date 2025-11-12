@@ -5,44 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmohamm2 <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 14:52:43 by mmohamm2          #+#    #+#             */
-/*   Updated: 2025/11/11 14:53:21 by mmohamm2         ###   ########.fr       */
+/*   Created: 2025/11/12 17:30:46 by mmohamm2          #+#    #+#             */
+/*   Updated: 2025/11/12 17:35:08 by mmohamm2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-size_t	str_len(const char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		i++;
-	}
-	return (i);
-}
-
 char	*ft_strdup(const char *s)
 {
-	size_t	s_len;
-	char	*str;
 	size_t	i;
+	size_t	len;
+	char	*dest;
 
-	i = 0;
-	s_len = str_len(s);
-	str = malloc((s_len + 1) * sizeof(char));
-	if (str == NULL)
+	len = 0;
+	while (s[len])
 	{
-		return (NULL);
+		len++;
 	}
-	while (i < s_len)
+	dest = malloc(sizeof(char) * (len + 1));
+	if (dest == NULL)
+		return (NULL);
+	i = 0;
+	while (s[i])
 	{
-		str[i] = s[i];
+		dest[i] = s[i];
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	dest[i] = '\0';
+	return (dest);
 }

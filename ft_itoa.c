@@ -6,7 +6,7 @@
 /*   By: mmohamm2 <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:16:22 by mmohamm2          #+#    #+#             */
-/*   Updated: 2025/11/11 14:25:01 by mmohamm2         ###   ########.fr       */
+/*   Updated: 2025/11/12 18:55:03 by mmohamm2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,42 +35,29 @@ size_t	ft_n_len(int n)
 	return (i);
 }
 
-char	*ft_converter(int n, char *ptr, size_t len)
+char	*ft_itoa(int n)
 {
-	long	nb;
-	int		ln;
+	size_t		len;
+	char		*ptr;
+	long long	nb;
 
+	len = ft_n_len(n);
+	ptr = malloc((len + 1) * sizeof(char));
+	if (!ptr)
+		return (NULL);
 	nb = n;
 	ptr[len] = '\0';
-	len--;
 	if (nb == 0)
-	{
-		ptr[len] = '0';
-		return (ptr);
-	}
+		ptr[0] = '0';
 	if (nb < 0)
 	{
-		nb = -nb;
 		ptr[0] = '-';
+		nb = -nb;
 	}
 	while (nb > 0)
 	{
-		ln = nb % 10;
-		ptr[len] = '0' + ln;
-		len--;
+		ptr[--len] = (nb % 10) + '0';
+		nb /= 10;
 	}
-	return (ptr);
-}
-
-char	*ft_itoa(int n)
-{
-	size_t	len;
-	char	*ptr;
-
-	len = ft_n_len(n);
-	ptr = ft_calloc((len + 1), sizeof(char));
-	if (!ptr)
-		return (NULL);
-	ft_converter(n, ptr, len);
 	return (ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: mmohamm2 <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:17:44 by mmohamm2          #+#    #+#             */
-/*   Updated: 2025/11/11 15:19:43 by mmohamm2         ###   ########.fr       */
+/*   Updated: 2025/11/12 18:08:43 by mmohamm2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,25 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	sub_len;
 	size_t	src_len;
+	size_t	i;
 	char	*sub_string;
 
-	if (!s || (ft_strlen(s) < start) || len == 0)
-	{
-		return ((char *) NULL);
-	}
+	i = 0;
+	if (!s)
+		return (NULL);
 	src_len = ft_strlen(s);
 	sub_len = src_len - start;
+	if (start > src_len)
+		return (ft_strdup(""));
 	if (sub_len < len)
-	{
 		len = sub_len;
-	}
-	sub_string = malloc((len + 1) * sizeof(char));
+	sub_string = ft_calloc((len + 1), sizeof(char));
 	if (sub_string == NULL)
+		return (NULL);
+	while (i < len)
 	{
-		return ((char *) NULL);
+		sub_string[i] = s[start + i];
+		i++;
 	}
-	ft_memcpy(sub_string, &s[start], len);
-	sub_string[len] = '\0';
 	return (sub_string);
 }
