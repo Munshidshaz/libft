@@ -5,107 +5,44 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmohamm2 <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 15:17:17 by mmohamm2          #+#    #+#             */
-/*   Updated: 2025/11/11 15:17:18 by mmohamm2         ###   ########.fr       */
+/*   Created: 2025/11/17 18:42:54 by mmohamm2          #+#    #+#             */
+/*   Updated: 2025/11/17 19:00:12 by mmohamm2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-size_t	ft_trim_locate(char const str_chr, char const *set)
+static int	is_set(char c, char const *set)
 {
-	size_t	set_index;
-
-	set_index = 0;
-	while (set[set_index])
+	int	i;
+	
+	i = 0;
+	while (set[i])
 	{
-		if (str_chr == set[set_index])
-		{
+		if (set[i] == c)
 			return (1);
-		}
-		set_index++;
+		i++;
 	}
 	return (0);
 }
 
-size_t	ft_trim_index(char const *src, char const *set, size_t begin)
-{
-	size_t	index;
-
-	index = 0;
-	if (begin == index)
-	{
-		while (src[index] && 1 == ft_trim_locate(src[index], set))
-		{
-			index++;
-		}
-		return (index);
-	}
-	else
-	{
-		index = begin;
-		while (index > 0 && 1 == ft_trim_locate(src[index], set))
-		{
-			index--;
-		}
-		if (index == 0 && 1 == ft_trim_locate(src[index], set))
-		{
-			return (0);
-		}
-		return (index);
-	}
-}
-
-void	ft_sub_cpy(char const *src, char *dst, size_t start, size_t end)
-{
-	size_t	dst_index;
-
-	dst_index = 0;
-	while (dst_index <= (end - start))
-	{
-		dst[dst_index] = src [start + dst_index];
-		dst_index++;
-	}
-	dst[dst_index] = '\0';
-}
-
-void	*ft_malloc(size_t size)
-{
-	char	*ptr;
-
-	ptr = malloc(size);
-	if (ptr == NULL)
-	{
-		return (NULL);
-	}
-	return (ptr);
-}
-
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	s1_len;
 	size_t	start;
 	size_t	end;
-	size_t	new_string_len;
-	char	*new_string;
+	
+	if (!s1)
+		return (ft_strdup(""));
+	if (!set)
+		return (ft_strdup(s1));	
+	start = 0;
+	end = ft_strlen(s1);
+	while (is_set(s1[start], set))
+		start++;
+	if (start == end)
+		return (ft_strdup(""));
+	while (is_set(s1[end-1], set))
+		end--;
+	return (ft_substr(s1, start, end - start));
 
-	s1_len = ft_strlen(s1);
-	end = s1_len - 1;
-	start = ft_trim_index(s1, set, 0);
-	end = ft_trim_index(s1, set, end);
-	if (start >= s1_len)
-	{
-		new_string = ft_malloc(1 * sizeof(char));
-		new_string[0] = '\0';
-		return (new_string);
-	}
-	new_string_len = (end - start) + 1;
-	new_string = malloc((new_string_len + 1) * sizeof(char));
-	if (new_string == NULL)
-	{
-		return (NULL);
-	}
-	ft_sub_cpy(s1, new_string, start, end);
-	return (new_string);
 }
