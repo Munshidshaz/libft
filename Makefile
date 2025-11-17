@@ -1,49 +1,73 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mmohamm2 <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/11/11 16:44:26 by mmohamm2          #+#    #+#              #
-#    Updated: 2025/11/12 19:05:16 by mmohamm2         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = libft.a
-
-PART1 = ft_tolower.c ft_toupper.c ft_isprint.c ft_isascii.c ft_isalnum.c \
-	ft_isdigit.c ft_isalpha.c ft_atoi.c ft_strlen.c ft_strlcat.c \
-	ft_strncmp.c ft_strdup.c ft_calloc.c ft_memcpy.c ft_strchr.c \
-	ft_strrchr.c ft_strnstr.c ft_bzero.c ft_memchr.c ft_memcmp.c \
-	ft_memset.c ft_memmove.c ft_strlcpy.c
-
-PART2 = ft_itoa.c ft_strjoin.c ft_split.c ft_striteri.c ft_strmapi.c \
-	ft_substr.c ft_strtrim.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
-	ft_putnbr_fd.c
-
-SRC = ${PART1} ${PART2}
-
-OBJS = ${SRC:.c=.o}
-
 CC = gcc
-RM = rm -f
-CFLAGS = -Wall -Wextra -Werror
-INCLUDE = -I .
+CFLAGS = -Wall -Werror -Wextra -g3
+AR = ar rcs
+SRC = ft_isalpha \
+	ft_isdigit \
+	ft_isalnum \
+	ft_isascii \
+	ft_isprint \
+	ft_strlen \
+	ft_memset \
+	ft_bzero \
+	ft_memcpy \
+	ft_memmove \
+	ft_strlcpy \
+	ft_strlcat \
+	ft_toupper \
+	ft_tolower \
+	ft_strchr \
+	ft_strrchr \
+	ft_strncmp \
+	ft_memchr \
+	ft_memcmp \
+	ft_strnstr \
+	ft_atoi \
+	ft_calloc \
+	ft_strdup \
+	ft_substr \
+	ft_strjoin \
+	ft_strtrim \
+	ft_split \
+	ft_itoa \
+	ft_strmapi \
+	ft_striteri \
+	ft_putchar_fd \
+	ft_putstr_fd \
+	ft_putendl_fd \
+	ft_putnbr_fd
+BONUS_SRC = ft_lstnew \
+		ft_lstadd_front \
+		ft_lstsize \
+		ft_lstlast \
+		ft_lstadd_back \
+		ft_lstdelone \
+		ft_lstclear \
+		ft_lstiter \
+		ft_lstmap \
 
-.o:.c
-	${CC} ${CFLAGS} ${INCLUDE} -c $< -o ${<:.c=.o}
+SRCS = $(addsuffix .c, $(SRC))
+OBJS = $(addsuffix .o, $(SRC))
+BONUS_SRCS = $(addsuffix .c, $(BONUS_SRC))
+BONUS_OBJS = $(addsuffix .o, $(BONUS_SRC))
 
-$(NAME): ${OBJS}
-	ar rcs ${NAME} ${OBJS}
+.c.o: $(SRCS) $(BONUS_SRCS)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
-all: ${NAME}
+$(NAME): $(OBJS)
+	$(AR) $@ $^
+
+bonus: $(OBJS) $(BONUS_OBJS)
+	$(AR) $(NAME) $^
+
+all: $(NAME)
 
 clean:
-	${RM} ${OBJS}
-fclean: ${clean}
-	${RM} ${NAME}
+	rm -f *.o
 
-re: fclean all
+fclean: clean
+	rm -f $(NAME)
 
-.PHONY: all clean fclean re
+re: clean all
+
+.PHONY: all clean fclean re bonus
